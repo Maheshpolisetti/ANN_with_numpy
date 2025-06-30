@@ -25,6 +25,8 @@ Modular ANN class with support for:
   
 8)Accuracy and R2 score evaluation
 
+9)Dropout
+
 # Architecture
 
 Custom class: deep_learning
@@ -71,7 +73,7 @@ Test r2: 0.7331692
 
  # Future Improvements
 
-Add support for dropout
+working on adaptive dropout(custom dropout method currently working)
 
 Add learning rate decay
 
