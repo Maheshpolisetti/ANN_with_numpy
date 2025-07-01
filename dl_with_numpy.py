@@ -13,6 +13,7 @@ class deep_learning:
         self.activation = []
         self.lmbda = lmbda
         self.lr = lr
+        self.drop_outs=[]
         self.grads_W = []
         self.grads_b = []
 
@@ -54,13 +55,14 @@ class deep_learning:
         return x
 
     # helper function for adding layers 
-    def add_layers(self, input_size, output_size, act="relu", weight_int="heuniform", base_int="zeros"):
+    def add_layers(self, input_size, output_size, act="relu", weight_int="heuniform", base_int="zeros",dropout=0.0):
         W = self.__weight_find(weight_int, input_size, output_size)
         b = self.__bias_finder(base_int, output_size)
         self.weights.append(W)
         self.biases.append(b)
         self.shapes.append((input_size, output_size))
         self.activation.append(act)
+        self.drop_outs.append(dropout)
 
     # activation functions and derivative function used in back propagation
     def relu(self, z):
@@ -127,14 +129,25 @@ class deep_learning:
             self.biases[i] -= self.lr * m_hat_b / (np.sqrt(v_hat_b) + epsilon)   # updating weights as per forumla 
 
     # forward propagation 
-    def forward(self, x):
+    def forward(self, x, training=True):
         n_layers = len(self.weights)
         A = x
         self.Zs = []
         self.As = [x]
+        self.masks = []
+
         for i in range(n_layers):
             Z = np.dot(A, self.weights[i]) + self.biases[i]
             A = self.__activation_finder(self.activation[i], Z)
+            
+            if training and self.drop_outs[i]>0:
+                dropout_mask = (np.random.rand(*A.shape) > self.drop_outs[i]).astype(float)
+                A *= dropout_mask
+                A /= (1.0 - self.drop_outs[i])
+                self.masks.append(dropout_mask)
+            else:
+                self.masks.append(None)
+
             self.Zs.append(Z)
             self.As.append(A)
         return A
@@ -208,7 +221,7 @@ class deep_learning:
 
     # for prediction using this model
     def predict(self, X, model_type="classification"):
-        y_pred = self.forward(X)
+        y_pred = self.forward(X,training=False)
         if model_type == "classification":
             return np.argmax(y_pred, axis=1) # onehot encoding 
         return y_pred
@@ -231,3 +244,4 @@ class deep_learning:
         ss_tot = np.sum((y_true - np.mean(y_true)) ** 2)
         r2 = 1 - (ss_res / ss_tot)
         return r2
+
