@@ -49,27 +49,27 @@ accuracy(), r2_score() – evaluation metrics
 
 # Results
 
-# 1) testing model with sklearn.datasets.load_digits
+# 1) testing model with sklearn.datasets.load_breast_cancer
 
-train Loss = 0.1521, Accuracy = 0.9708
+train Loss = 0.1178, Accuracy = 0.9824
 
-Test Accuracy: 0.9444
+Test Accuracy: 0.9649
 
 No significant overfitting observed. 
 
 # 2) testing model with sklearn.datasets.fetch_california_housing
 
-train Loss = 0.9710, r2 score = 0.7524
+train Loss = 0.9883, r2 score = 0.7452
 
-Test r2: 0.7331692
+Test r2: 0.7250756
 
  No significant overfitting observed. r2 score can be improve by more layers, Dropouts(coming soon)
 
  # 3) testing model with keras.datasets.mnist
 
- train Loss = 0.1248, Accuracy = 0.9641
+ train Loss = 0.3017, Accuracy = 0.9529
  
- Test Accuracy: 0.9587
+ Test Accuracy: 0.9501
 
  # Future Improvements
 
