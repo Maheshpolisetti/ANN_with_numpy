@@ -1,87 +1,83 @@
 # Project: Artificial Neural Network from Scratch with NumPy
 
+## Overview
+This project implements a fully functional **Artificial Neural Network (ANN)** from scratch using only **Python and NumPy** — no machine learning frameworks (e.g., TensorFlow, PyTorch, Scikit-learn) are used. The aim is to deeply understand the internals of neural networks, including forward and backward propagation, optimization, and evaluation metrics.
 
-# Overview:
+---
 
-This project implements a fully functional Artificial Neural Network (ANN) from scratch using only Python and NumPy. No machine learning frameworks (e.g., TensorFlow, PyTorch, Scikit-learn) are used. The goal is to provide a transparent understanding of forward propagation, backpropagation, optimization, and evaluation techniques in neural networks.
+## Features
 
-# Features
+Modular `deep_learning` class supports:
 
-Modular ANN class with support for:
+1. Multiple hidden layers  
+2. Custom weight/bias initialization strategies  
+3. Activation functions: ReLU, Leaky ReLU, Softmax  
+4. Loss functions:  
+   - Cross-Entropy (for classification)  
+   - Mean Squared Error (for regression)  
+5. L2 Regularization  
+6. Adam Optimizer  
+7. Evaluation Metrics: Accuracy, R² Score  
+8. Dropout Regularization  
 
-1)Multiple layers
+---
 
-2)Custom weight/bias initialization strategies
+## Architecture
 
-3)ReLU, Leaky ReLU, and Softmax activation functions
-  
-4)Cross-entropy loss (classification)
-  
-5)Mean Squared Error loss (regression)
-  
-6)L2 Regularization
-  
-7)Adam optimizer
-  
-8)Accuracy and R2 score evaluation
+### Custom Class: `deep_learning`
 
-9)Dropout
+| Method | Description |
+|--------|-------------|
+| `base_model(lmbda, lr)` | Initializes the model with regularization and learning rate |
+| `add_layers(input_size, output_size, act, weight_int, base_int)` | Adds a layer with activation and initialization |
+| `train(X, y, model_type, optimizer, epochs)` | Trains the model using chosen optimizer |
+| `forward()` and `backward_*()` | Forward and backward propagation |
+| `predict()` | Generates predictions |
+| `accuracy()`, `r2_score()` | Evaluates model performance |
 
-# Architecture
+_Example usage is shown in: `try_dl_numpy.py`_
 
-Custom class: deep_learning
+---
 
-Methods include:
+## Results
 
-base_model(lmbda, lr) – initialize model and adding layers into model 
+### 1. Breast Cancer Dataset (Classification)
 
-add_layers(input_size, output_size, act, weight_int, base_int) – add layers
+- `train_loss`: **0.1178**
+- `Train Accuracy`: **98.24%**
+- `Test Accuracy`: **96.49%**
 
-train(X, y, model_type, optimizer, epochs) – train model
+No significant overfitting observed.
 
-forward() and backward_*() – propagation
+---
 
-predict() – make predictions
+### 2. California Housing Dataset (Regression)
 
-accuracy(), r2_score() – evaluation metrics
+- `train_loss`: **0.9883**
+- `Train R²`: **0.7452**
+- `Test R²`: **0.7251**
 
-# example usages in try_dl_numpy
+No significant overfitting.  
+R² score can improve further with additional layers and dropout (in progress).
 
-# Results
+---
 
-# 1) testing model with sklearn.datasets.load_breast_cancer
+### 3. MNIST Dataset (Classification)
 
-train Loss = 0.1178, Accuracy = 0.9824
+- `train_loss`: **0.3017**
+- `Train Accuracy`: **95.29%**
+- `Test Accuracy`: **95.01%**
 
-Test Accuracy: 0.9649
+Stable training and generalization across epochs.
 
-No significant overfitting observed. 
+---
 
-# 2) testing model with sklearn.datasets.fetch_california_housing
+## Future Improvements
 
-train Loss = 0.9883, r2 score = 0.7452
+- Implement custom adaptive dropout strategy  
+- Add learning rate decay functionality  
+- Add mini-batch training (batch/mini-batch SGD)
 
-Test r2: 0.7250756
+---
 
- No significant overfitting observed. r2 score can be improve by more layers, Dropouts(coming soon)
-
- # 3) testing model with keras.datasets.mnist
-
- train Loss = 0.3017, Accuracy = 0.9529
- 
- Test Accuracy: 0.9501
-
- # Future Improvements
-
-working on adaptive dropout(custom dropout method currently working)
-
-Add learning rate decay
-
-Add batch training (mini-batch SGD)
-
-
-
- 
-
-
-
+This project is an excellent educational tool for mastering neural networks at a fundamental level without abstracting away any logic.
